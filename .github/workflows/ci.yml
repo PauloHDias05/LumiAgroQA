@@ -12,3 +12,15 @@ jobs:
           browser: chrome
           headless: true
           config-file: cypress.config.js
+
+          env:
+            CYPRESS_urlbase: ${{ secrets.CYPRESS_urlbase }}
+            CYPRESS_email_cadastrado: ${{ secrets.CYPRESS_email_cadastrado }}
+            CYPRESS_email_invalido: ${{ secrets.CYPRESS_email_invalido }}
+            CYPRESS_email_novo2: ${{ secrets.CYPRESS_email_novo2 }}
+            CYPRESS_email_padrao: ${{ secrets.CYPRESS_email_padrao }}
+            CYPRESS_nome_padrao: ${{ secrets.CYPRESS_nome_padrao }}
+            CYPRESS_senha_padrao: ${{ secrets.CYPRESS_senha_padrao }}
+            CYPRESS_senha_invalida: ${{ secrets.CYPRESS_senha_invalida }}
+            CYPRESS_senha_menor8: ${{ secrets.CYPRESS_senha_menor8 }}
+            CYPRESS_login: '{"username": "${{secrets.LOGIN_USERNAME}}", "password": "${{secrets.LOGIN_PASSWORD}'
