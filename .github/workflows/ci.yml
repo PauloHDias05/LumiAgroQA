@@ -12,6 +12,19 @@ jobs:
           browser: chrome
           headless: true
           config-file: cypress.config.js
+        env:
+          CYPRESS_urlbase: ${{ secrets.URLBASE }}
+          CYPRESS_email_novo: ${{ secrets.EMAIL_NOVO }}
+          CYPRESS_email_novo2: ${{ secrets.EMAIL_NOVO2 }}
+          CYPRESS_email_novo3: ${{ secrets.EMAIL_NOVO3 }}
+          CYPRESS_email_cadastrado: ${{ secrets.EMAIL_CADASTRADO }}
+          CYPRESS_email_invalido: ${{ secrets.EMAIL_INVALIDO }}
+          CYPRESS_email_padrao: ${{ secrets.EMAIL_PADRAO }}
+          CYPRESS_senha_padrao: ${{ secrets.SENHA_PADRAO }}
+          CYPRESS_senha_menor8: ${{ secrets.SENHA_MENOR8 }}
+          CYPRESS_senha_invalida: ${{ secrets.SENHA_INVALIDA }}
+          CYPRESS_nome_padrao: ${{ secrets.NOME_PADRAO }}
+          CYPRESS_login: '{"username":"${{ secrets.LOGIN_USERNAME }}","password":"${{ secrets.LOGIN_PASSWORD }}"}'    
 
       - uses: actions/upload-artifact@v7
        
@@ -26,16 +39,4 @@ jobs:
           path: cypress/videos
           if-no-files-found: ignore
 
-        env:
-          CYPRESS_urlbase: ${{ secrets.URLBASE }}
-          CYPRESS_email_novo: ${{ secrets.EMAIL_NOVO }}
-          CYPRESS_email_novo2: ${{ secrets.EMAIL_NOVO2 }}
-          CYPRESS_email_novo3: ${{ secrets.EMAIL_NOVO3 }}
-          CYPRESS_email_cadastrado: ${{ secrets.EMAIL_CADASTRADO }}
-          CYPRESS_email_invalido: ${{ secrets.EMAIL_INVALIDO }}
-          CYPRESS_email_padrao: ${{ secrets.EMAIL_PADRAO }}
-          CYPRESS_senha_padrao: ${{ secrets.SENHA_PADRAO }}
-          CYPRESS_senha_menor8: ${{ secrets.SENHA_MENOR8 }}
-          CYPRESS_senha_invalida: ${{ secrets.SENHA_INVALIDA }}
-          CYPRESS_nome_padrao: ${{ secrets.NOME_PADRAO }}
-          CYPRESS_login: '{"username":"${{ secrets.LOGIN_USERNAME }}","password":"${{ secrets.LOGIN_PASSWORD }}"}' 
+        
