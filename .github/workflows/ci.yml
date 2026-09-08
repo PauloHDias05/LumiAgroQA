@@ -13,6 +13,19 @@ jobs:
           headless: true
           config-file: cypress.config.js
 
+      - uses: actions/upload-artifact@v7
+       
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore 
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore
+
         env:
           CYPRESS_urlbase: ${{ secrets.URLBASE }}
           CYPRESS_email_novo: ${{ secrets.EMAIL_NOVO }}
