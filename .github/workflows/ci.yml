@@ -28,7 +28,6 @@ jobs:
 
       - uses: actions/upload-artifact@v7
        
-        if: failure()
         with:
           name: cypress-reports
           path: cypress/reports
