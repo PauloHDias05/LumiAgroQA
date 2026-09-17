@@ -1,18 +1,32 @@
-name: End-to-end tests
-on: push
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
       - name: Cypress run
         uses: cypress-io/github-action@v7
         with:
           browser: chrome
           headless: true
           config-file: cypress.config.js
+
         env:
+          LANG: pt_BR.UTF-8
+          LANGUAGE: pt_BR:pt
+          LC_ALL: pt_BR.UTF-8
           CYPRESS_urlbase: ${{ secrets.URLBASE }}
           CYPRESS_email_novo: ${{ secrets.EMAIL_NOVO }}
           CYPRESS_email_novo2: ${{ secrets.EMAIL_NOVO2 }}
@@ -26,16 +40,54 @@ jobs:
           CYPRESS_nome_padrao: ${{ secrets.NOME_PADRAO }}
           CYPRESS_login: '{"username":"${{ secrets.LOGIN_USERNAME }}","password":"${{ secrets.LOGIN_PASSWORD }}"}'    
 
-      - uses: actions/upload-artifact@v7
-       
+      - name: Upload Cypress report
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-reports
-          path: cypress/reports
-          if-no-files-found: ignore 
-      - uses: actions/upload-artifact@v7
+          path: cypress/reports/html
+          if-no-files-found: ignore
+
+      
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-videos
           path: cypress/videos
           if-no-files-found: ignore
+
+      
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+     
+      - name: Upload report for GitHub Pages
+        if: always()
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: cypress/reports/html
+
+  deploy-report:
+    needs: cypress-run
+
+    
+    if: always()
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy report
+        id: deployment
+        uses: actions/deploy-pages@v4
 
         
